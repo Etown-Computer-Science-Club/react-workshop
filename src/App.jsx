@@ -1,10 +1,15 @@
-import React from 'react';
-import './App.css'
+import React from "react";
+import "./App.css";
 
 const App = () => {
 	return (
-		<div>
-			
+		<div className="app">
+			<header className="app-header">
+				<h1>TaskMaster</h1>
+			</header>
+			<main>
+				<div>Insert ToDos Component Here</div>
+			</main>
 		</div>
 	);
 };
