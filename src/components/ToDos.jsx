@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ToDo from './ToDo';
-import { getToDos, deleteToDo, updateToDo } from '../services/toDoService';
+import { getToDos, deleteToDo, updateToDo, addToDo } from '../services/toDoService';
 
 const ToDos = () => {
 	const [toDos, setToDos] = useState([]);
+	const [toDoTitle, setToDoTitle] = useState('');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -47,29 +48,57 @@ const ToDos = () => {
 			setToDos(originalToDos);
 		}
 	}
+
+	async function handleAddToDo() {
+		const originalToDos = toDos;
+
+		try {
+			const newToDo = await addToDo(toDoTitle, false);
+
+			const newToDos = [...toDos, newToDo];
+			setToDos(newToDos);
+			setToDoTitle('');
+		} catch (e) {
+			console.error(e);
+			setToDos(originalToDos);
+		}
+	}
 	
 	return (
-		<table className='todosTable'>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Completed</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{toDos.map((toDo) => (
-					<ToDo
-						key={toDo.id}
-						id={toDo.id}
-						title={toDo.title}
-						completed={toDo.completed}
-						handleDelete={handleDelete}
-						handleCheckboxChange={handleCheckboxChange}
-					/>
-				))}
-			</tbody>
-		</table>
+		<>
+			<div className='add-todo-container'>
+				<input
+					type="text"
+					placeholder="Add a new todo"
+					value={toDoTitle}
+					onChange={(event) => setToDoTitle(event.target.value)}
+				/>
+				<button onClick={handleAddToDo}>
+					Add
+				</button>
+			</div>
+			<table className='todosTable'>
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Completed</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{toDos.map((toDo) => (
+						<ToDo
+							key={toDo.id}
+							id={toDo.id}
+							title={toDo.title}
+							completed={toDo.completed}
+							handleDelete={handleDelete}
+							handleCheckboxChange={handleCheckboxChange}
+						/>
+					))}
+				</tbody>
+			</table>
+		</>
 	);
 };
 
