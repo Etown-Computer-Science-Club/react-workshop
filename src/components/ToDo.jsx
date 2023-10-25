@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const ToDo = () => {
+const ToDo = (props) => {
 	return (
-		<div>
-			
-		</div>
+		<tr>
+			<td>{props.title}</td>
+			<td>{props.completed ? "Yes" : "No"}</td>
+		</tr>
 	);
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import ToDos from "./components/ToDos";
 
 const App = () => {
 	return (
@@ -8,7 +9,7 @@ const App = () => {
 				<h1>TaskMaster</h1>
 			</header>
 			<main>
-				<div>Insert ToDos Component Here</div>
+				<ToDos />
 			</main>
 		</div>
 	);
