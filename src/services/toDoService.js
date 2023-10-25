@@ -1,6 +1,8 @@
+const apiUrl = 'http://localhost:3000/todos';
+
 export async function getToDos() {
 	try {
-		const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+		const response = await fetch(apiUrl);
 		const data = await response.json();
 		return data;
 	} catch (e) {
@@ -10,7 +12,7 @@ export async function getToDos() {
 }
 
 export async function addToDo(title, completed) {
-	const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
+	const response = await fetch(apiUrl, {
 		method: 'POST',
 		body: JSON.stringify({
 			title: title,
@@ -26,7 +28,7 @@ export async function addToDo(title, completed) {
 }
 
 export async function updateToDo(id, completed) {
-	const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+	const response = await fetch(`${apiUrl}/${id}`, {
 		method: 'PATCH',
 		body: JSON.stringify({
 			completed: completed
@@ -40,7 +42,7 @@ export async function updateToDo(id, completed) {
 }
 
 export async function deleteToDo(id) {
-	const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+	const response = await fetch(`${apiUrl}/${id}`, {
 		method: 'DELETE',
 	});
 	const data = await response.json();
