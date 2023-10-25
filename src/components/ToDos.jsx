@@ -23,9 +23,9 @@ const ToDos = () => {
 	]);
 	
 	return (
-		<table className='todosTable'>
-			
-		</table>
+		<div>
+
+		</div>
 	);
 };
 
