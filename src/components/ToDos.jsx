@@ -9,7 +9,6 @@ const ToDos = () => {
 		async function fetchData() {
 			const data = await getToDos();
 			setToDos(data);
-			const newToDo = updateToDo(1, { completed: true })
 		}
 
 		fetchData();
