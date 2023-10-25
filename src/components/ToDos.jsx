@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ToDo from './ToDo';
-import { getToDos, deleteToDo } from '../services/toDoService';
+import { getToDos, deleteToDo, updateToDo } from '../services/toDoService';
 
 const ToDos = () => {
 	const [toDos, setToDos] = useState([]);
@@ -27,6 +27,26 @@ const ToDos = () => {
 			setToDos(originalToDos);
 		}
 	}
+
+	async function handleCheckboxChange(id, isChecked) {
+		const originalToDos = toDos;
+
+		try {
+			await updateToDo(id, isChecked);
+
+			const newToDos = toDos.map((toDo) => {
+				if (toDo.id === id) {
+					toDo.completed = isChecked;
+				}
+				return toDo;
+			});
+
+			setToDos(newToDos);
+		} catch (e) {
+			console.error(e);
+			setToDos(originalToDos);
+		}
+	}
 	
 	return (
 		<table className='todosTable'>
@@ -45,6 +65,7 @@ const ToDos = () => {
 						title={toDo.title}
 						completed={toDo.completed}
 						handleDelete={handleDelete}
+						handleCheckboxChange={handleCheckboxChange}
 					/>
 				))}
 			</tbody>
