@@ -4,7 +4,14 @@ const ToDo = (props) => {
 	return (
 		<tr>
 			<td>{props.title}</td>
-			<td>{props.completed ? "Yes" : "No"}</td>
+			<td>
+				<input type="checkbox" checked={props.completed} />
+			</td>
+			<td>
+				<button onClick={() => props.handleDelete(props.id)} className="deleteBtn">
+					Delete
+				</button>
+			</td>
 		</tr>
 	);
 };

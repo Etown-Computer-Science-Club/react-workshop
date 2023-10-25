@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ToDo from './ToDo';
-import { getToDos, updateToDo } from '../services/toDoService';
+import { getToDos, deleteToDo } from '../services/toDoService';
 
 const ToDos = () => {
 	const [toDos, setToDos] = useState([]);
@@ -13,6 +13,20 @@ const ToDos = () => {
 
 		fetchData();
 	}, []);
+
+	async function handleDelete(id) {
+		const originalToDos = toDos;
+
+		try {
+			await deleteToDo(id);
+
+			const newToDos = toDos.filter((toDo) => toDo.id !== id);
+			setToDos(newToDos);
+		} catch (e) {
+			console.error(e);
+			setToDos(originalToDos);
+		}
+	}
 	
 	return (
 		<table className='todosTable'>
@@ -20,14 +34,17 @@ const ToDos = () => {
 				<tr>
 					<th>Title</th>
 					<th>Completed</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				{toDos.map((toDo) => (
-					<ToDo 
+					<ToDo
 						key={toDo.id}
+						id={toDo.id}
 						title={toDo.title}
 						completed={toDo.completed}
+						handleDelete={handleDelete}
 					/>
 				))}
 			</tbody>
